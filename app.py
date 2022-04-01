@@ -3,6 +3,7 @@ import pandas as pd
 
 from streamingListener import myStreamListener
 from keys import bearer
+from utils import WANTED_FIELDS
 
 def getClient(bearer_token):
     return tweepy.Client(bearer_token, wait_on_rate_limit=True)
@@ -25,8 +26,7 @@ if __name__ == '__main__':
     # client = getClient(bearer)
     # search_result = perform_search(client)
     # save_to_df(search_result)
-    df = pd.DataFrame([], columns=['text', 'author_id', 'created_at'])
 
-    client = myStreamListener(bearer, df )
-    client.sample(tweet_fields=['author_id', 'lang', 'created_at'])
+    client = myStreamListener(bearer)
+    client.sample(tweet_fields= WANTED_FIELDS)
     
