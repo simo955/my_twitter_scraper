@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 .DS_Store
 keys.py
+
+#Saved tweets
 *.csv
+*.txt

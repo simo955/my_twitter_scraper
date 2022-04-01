@@ -1,24 +1,8 @@
 import tweepy
 import pandas as pd
 
-from streamingListener import streamListener
+from streamingListener import myStreamListener
 from keys import bearer
-
-def save_to_df(result):
-    try:
-        # Save data as dictionary
-        tweets_dict = result.json() 
-
-        # Extract "data" value from dictionary
-        tweets_data = tweets_dict['data'] 
-
-        # Transform to pandas Dataframe
-        df = pd.json_normalize(tweets_data) 
-        # save df
-        df.to_csv("tweets_result.csv")
-    except Exception as e:
-        print(e, 'Something went wrong while saving')
-        
 
 def getClient(bearer_token):
     return tweepy.Client(bearer_token, wait_on_rate_limit=True)
@@ -37,11 +21,12 @@ def perform_search(client):
     return tweets
 
 
-
 if __name__ == '__main__':
     # client = getClient(bearer)
     # search_result = perform_search(client)
     # save_to_df(search_result)
-    client = streamListener(bearer)
-    client.sample()
+    df = pd.DataFrame([], columns=['text', 'author_id', 'created_at'])
+
+    client = myStreamListener(bearer, df )
+    client.sample(tweet_fields=['author_id', 'lang', 'created_at'])
     
