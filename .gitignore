@@ -128,3 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 keys.py
+
+#Saved tweets
+*.csv
+*.txt
