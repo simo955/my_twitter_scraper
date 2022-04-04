@@ -1,9 +1,8 @@
 import tweepy
-import pandas as pd
 
-from streamingListener import myStreamListener
-from keys import bearer
-from utils import WANTED_FIELDS
+from src.streamingListener import myStreamListener
+from src.keys import bearer
+from src.utils import WANTED_FIELDS
 
 def getClient(bearer_token):
     return tweepy.Client(bearer_token, wait_on_rate_limit=True)
@@ -26,7 +25,8 @@ if __name__ == '__main__':
     # client = getClient(bearer)
     # search_result = perform_search(client)
     # save_to_df(search_result)
-
+    print('Initializing stream..')
     client = myStreamListener(bearer)
+    print('Stream initialized. Now running!!')
     client.sample(tweet_fields= WANTED_FIELDS)
     

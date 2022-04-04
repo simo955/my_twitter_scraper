@@ -1,6 +1,6 @@
 import pandas as pd
 
-WANTED_FIELDS=['id','text', 'author_id', 'created_at', 'public_metrics', 'lang']
+from src.config import WANTED_FIELDS
 
 
 def save_to_df(results, df):
