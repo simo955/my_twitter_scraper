@@ -9,6 +9,6 @@ services:
       - ./src:/app/src
       - ./data:/app/data
       - ./app.py:/app/app.py
-    environment:
-      - AM_I_IN_A_DOCKER_CONTAINER=Yes
+    environment: 
+    - TWITTER_BEARER=XX
     entrypoint: ["python3",  "/app/app.py"]

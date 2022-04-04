@@ -8,9 +8,9 @@ class myStreamListener(tweepy.StreamingClient):
     batched_tweets = []
     closed_peacefully = False
 
-    def __init__(self, bearer) -> None:
+    def __init__(self, bearer_token) -> None:
         self.df = None
-        super().__init__(bearer, wait_on_rate_limit=True, return_type = dict )
+        super().__init__(bearer_token, wait_on_rate_limit=True, return_type = dict )
 
     def reset_batch(self):
         self.batched_tweets = []

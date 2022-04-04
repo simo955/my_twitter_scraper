@@ -1,7 +1,24 @@
 import pandas as pd
+import tweepy
 
 from src.config import WANTED_FIELDS
 
+
+def getClient(bearer_token):
+    return tweepy.Client(bearer_token, wait_on_rate_limit=True)
+
+def perform_search(client):
+    # Replace with your own search query
+    query = 'from:elonmusk -is:retweet'
+    tweets = client.search_recent_tweets(query=query,
+                                        tweet_fields=WANTED_FIELDS,
+                                        max_results=10)
+
+    for tweet in tweets.data:
+        print(tweet.text)
+        if len(tweet.context_annotations) > 0:
+            print(tweet.context_annotations)
+    return tweets
 
 def save_to_df(results, df):
     if df is None:
@@ -26,9 +43,3 @@ def save_df_to_csv(df, path, index=False):
         print('DF Saved on file {}'.format(path))
     except Exception as e:
         print(e, 'Something went wrong while saving the DF on file.')
-
-
-# df = pd.DataFrame([['text1', 'author1', 'created at 1'], ['text2', 'author1', 'created at 2']], columns=['text', 'author_id', 'created_at'])
-# results = [{'text': 'text3', 'author_id': 'auth2', 'created_at': 'created at 3'}]
-# df = save_to_df(results, df)
-# save_df_to_csv(df, 'tweets.csv')

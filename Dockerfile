@@ -8,6 +8,6 @@ ADD data /app/data
 ADD app.py /app
 WORKDIR /app
 
-ENV AM_I_IN_A_DOCKER_CONTAINER Yes
+ENV TWITTER_BEARER XX
 
 CMD ["python3",  "/app/app.py"]
