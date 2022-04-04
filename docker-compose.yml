@@ -1,0 +1,14 @@
+version: '3'
+services:
+  my-screaper:
+    image: my-screaper:latest
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./app.py:/app/app.py
+    environment: 
+    - TWITTER_BEARER=XX
+    entrypoint: ["python3",  "/app/app.py"]

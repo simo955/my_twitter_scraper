@@ -1,9 +1,6 @@
 import tweepy
-from utils import save_to_df, save_df_to_csv
-
-ENG_TEXT='en'
-BATCH_SIZE=1000
-TOT_TWEET=20000
+from src.utils import save_to_df, save_df_to_csv
+from src.config import ENG_TEXT, BATCH_SIZE, TOT_TWEET
 
 class myStreamListener(tweepy.StreamingClient):
     total_number_of_tweets = 0
@@ -11,9 +8,9 @@ class myStreamListener(tweepy.StreamingClient):
     batched_tweets = []
     closed_peacefully = False
 
-    def __init__(self, bearer) -> None:
+    def __init__(self, bearer_token) -> None:
         self.df = None
-        super().__init__(bearer, wait_on_rate_limit=True, return_type = dict )
+        super().__init__(bearer_token, wait_on_rate_limit=True, return_type = dict )
 
     def reset_batch(self):
         self.batched_tweets = []
@@ -34,11 +31,12 @@ class myStreamListener(tweepy.StreamingClient):
             self.current_number_batched += 1
 
             if self.current_number_batched > BATCH_SIZE:
+                print('{} tweet parsed'.format(self.total_number_of_tweets))
                 self.df = save_to_df(self.batched_tweets, self.df)
                 self.reset_batch()
 
             if self.total_number_of_tweets > TOT_TWEET:
-                save_df_to_csv(self.df, 'tweets.csv')
+                save_df_to_csv(self.df, 'data/tweets.csv')
                 self.closed_peacefully=True
                 self.disconnect() 
         
