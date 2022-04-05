@@ -5,20 +5,29 @@ from src.config import WANTED_FIELDS
 
 
 def getClient(bearer_token):
-    return tweepy.Client(bearer_token, wait_on_rate_limit=True)
+    return tweepy.Client(bearer_token, wait_on_rate_limit=True, return_type = dict)
 
-def perform_search(client):
-    # Replace with your own search query
-    query = 'from:elonmusk -is:retweet'
-    tweets = client.search_recent_tweets(query=query,
+def perform_search(client, isUser, user=None, tag=''):
+    if isUser and user:
+        query='from:{} -is:retweet'.format(user)
+    else:
+        query='#{}'.format(tag)
+
+    return client.search_recent_tweets(query=query,
                                         tweet_fields=WANTED_FIELDS,
-                                        max_results=10)
+                                        max_results=100)
 
-    for tweet in tweets.data:
-        print(tweet.text)
-        if len(tweet.context_annotations) > 0:
-            print(tweet.context_annotations)
-    return tweets
+def build_custom_dt(client, df=None):
+    wanted_users = ['elonmusk']
+    wanted_hashtags = ['crypto']
+    for usr in wanted_users:
+        tweets=perform_search(client, True, usr)
+        df=save_to_df(tweets['data'], df)
+    for tag in wanted_hashtags:
+        tweets=perform_search(client, False, tag=tag)
+        df=save_to_df(tweets['data'], df)
+    
+    save_df_to_csv(df, 'data/tweets-SPECIFIC.csv')
 
 def save_to_df(results, df):
     if df is None:

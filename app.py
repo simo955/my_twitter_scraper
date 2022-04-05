@@ -2,11 +2,19 @@ import os
 
 from src.streamingListener import myStreamListener
 from src.utils import WANTED_FIELDS
-#from src.keys import bearer
+from src.utils import build_custom_dt, getClient
+
+token=os.environ['TWITTER_BEARER']
+
 
 if __name__ == '__main__':
-    print('Initializing stream..')
-    client = myStreamListener(bearer_token=os.environ['TWITTER_BEARER'])
+    print('Inizialization..')
+    client=getClient(bearer_token=token)
+    build_custom_dt(client)
+
+    print('Specific dt created')
+
+    stream = myStreamListener(bearer_token=token)
     print('Stream initialized. Now running!!')
-    client.sample(tweet_fields=WANTED_FIELDS)
+    stream.sample(tweet_fields=WANTED_FIELDS)
     

@@ -10,5 +10,5 @@ services:
       - ./data:/app/data
       - ./app.py:/app/app.py
     environment: 
-    - TWITTER_BEARER=XX
+    - TWITTER_BEARER=
     entrypoint: ["python3",  "/app/app.py"]
