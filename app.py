@@ -1,11 +1,10 @@
 import os
 
-from src.streamingListener import myStreamListener
+from src.tweepy.streamingListener import myStreamListener
+from src.tweepy.functions import build_custom_dt, getClient
 from src.utils import WANTED_FIELDS
-from src.utils import build_custom_dt, getClient
 
 token=os.environ['TWITTER_BEARER']
-
 
 if __name__ == '__main__':
     print('Inizialization..')
