@@ -1,5 +1,6 @@
+import time
 import tweepy
-from src.config import WANTED_FIELDS, BASIC_DATA_PATH
+from src.config import WANTED_FIELDS, BASIC_DATA_PATH, WANTED_USERS,WANTED_HASHTAGS
 from src.utils import save_to_df,save_df_to_csv
 
 def getClient(bearer_token):
@@ -16,13 +17,13 @@ def perform_search(client, isUser, user=None, tag=''):
                                         max_results=100)
 
 def build_custom_dt(client, df=None):
-    wanted_users = ['elonmusk']
-    wanted_hashtags = ['crypto']
-    for usr in wanted_users:
+    for usr in WANTED_USERS:
         tweets=perform_search(client, True, usr)
+        time.sleep(1)
         df=save_to_df(tweets['data'], df)
-    for tag in wanted_hashtags:
+    for tag in WANTED_HASHTAGS:
         tweets=perform_search(client, False, tag=tag)
-        df=save_to_df(tweets['data'], df)
+        time.sleep(1)
     
+        df=save_to_df(tweets.get('data',[]), df)
     save_df_to_csv(df, BASIC_DATA_PATH+'-{}.csv'.format('CUSTOM'))

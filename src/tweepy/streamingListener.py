@@ -1,6 +1,6 @@
 import tweepy
-from src.utils import save_to_df, save_df_to_csv, is_retweet
-from src.config import BASIC_DATA_PATH, ENG_TEXT, BATCH_SIZE, TOT_TWEET
+from src.utils import save_to_df, save_df_to_csv, is_tweet_valid
+from src.config import BASIC_DATA_PATH, BATCH_SIZE, TOT_TWEET
 
 class myStreamListener(tweepy.StreamingClient):
     total_number_of_tweets = 0
@@ -20,28 +20,26 @@ class myStreamListener(tweepy.StreamingClient):
         self.batch_num+=1
 
     def on_tweet(self, tweet):
-        if tweet['lang'] != ENG_TEXT:
+        if is_tweet_valid(tweet)==False:
            return
+        try:
+            self.batched_tweets.append(tweet)
+            self.total_number_of_tweets += 1
+            self.current_number_batched += 1
 
-        if not is_retweet(tweet['text']):   
-            try:
-                self.batched_tweets.append(tweet)
-                self.total_number_of_tweets += 1
-                self.current_number_batched += 1
+            if self.current_number_batched > BATCH_SIZE:
+                print('{} tweet parsed'.format(self.total_number_of_tweets))
+                self.df = save_to_df(self.batched_tweets, self.df)
+                save_df_to_csv(self.df, BASIC_DATA_PATH+'-{}.csv'.format(self.batch_num))
+                self.reset_batch()
 
-                if self.current_number_batched > BATCH_SIZE:
-                    print('{} tweet parsed'.format(self.total_number_of_tweets))
-                    self.df = save_to_df(self.batched_tweets, self.df)
-                    save_df_to_csv(self.df, BASIC_DATA_PATH+'-{}.csv'.format(self.batch_num))
-                    self.reset_batch()
-
-                if self.total_number_of_tweets > TOT_TWEET:
-                    self.closed_peacefully=True
-                    self.disconnect() 
-            
-            except Exception as e:
-                print('Encountered Exception:', e)
-                pass
+            if self.total_number_of_tweets > TOT_TWEET:
+                self.closed_peacefully=True
+                self.disconnect() 
+        
+        except Exception as e:
+            print('Encountered Exception:', e)
+            pass
 
     def on_errors(self, errors) :
         save_df_to_csv(self.df, BASIC_DATA_PATH+'-{}.csv'.format('BACKUP'))

@@ -1,7 +1,6 @@
 import pandas as pd
-import tweepy
 
-from src.config import WANTED_FIELDS
+from src.config import WANTED_FIELDS, ENG_TEXT
 
 def save_to_df(results, df):
     if df is None:
@@ -31,3 +30,12 @@ def is_retweet(text):
     if any(('RT @' in text, 'RT' in text, text.count('@') >= 2)):
         return True
     return False
+
+def is_tweet_valid(tweet):
+    if  not tweet['id']:
+        return False
+    if tweet['lang'] != ENG_TEXT:
+        return False
+    if is_retweet(tweet['text']):
+        return False
+    return True
