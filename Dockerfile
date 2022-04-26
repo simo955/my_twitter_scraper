@@ -4,7 +4,6 @@ ADD requirements.txt /app/
 RUN pip install -r /app/requirements.txt
 
 COPY src /app/src
-COPY data /app/data
 COPY app.py /app
 WORKDIR /app
 
