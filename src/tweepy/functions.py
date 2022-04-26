@@ -8,9 +8,9 @@ def getClient(bearer_token):
 
 def perform_search(client, isUser, user=None, tag=''):
     if isUser and user:
-        query='from:{} -is:retweet'.format(user)
+        query='from:{} -is:retweet lang:en'.format(user)
     else:
-        query='#{}'.format(tag)
+        query='#{} lang:en'.format(tag)
 
     return client.search_recent_tweets(query=query,
                                         tweet_fields=WANTED_FIELDS,
