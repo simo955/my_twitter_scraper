@@ -133,3 +133,4 @@ keys.py
 #Saved tweets
 *.csv
 *.txt
+Linode/.kube/mykube-kubeconfig.yaml
