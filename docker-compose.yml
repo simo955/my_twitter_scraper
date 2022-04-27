@@ -1,7 +1,7 @@
 version: '3'
 services:
-  my-screaper:
-    image: my-screaper:latest
+  twitter-screaper:
+    image: twitter-screaper:latest
     working_dir: /app
     ports:
       - "8000:8000"

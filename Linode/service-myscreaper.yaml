@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-screaper
-  namespace: mykube-dev
+  name: twitter-screaper
+  namespace: mynamespace-dev
 spec:
   selector:
-    app: my-screaper
+    app: twitter-screaper
   ports:
   - protocol: TCP
     port: 80
