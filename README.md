@@ -1,9 +1,9 @@
-# my_twitter_screaper
+# My personal version of a Twitter screaper
 
 
 
-### Build
+### Build image
 ```docker build -v data:data/app my-screaper .```
 ## Run
-```docker-compose run my-screaper```
-```docker run -v ${PWD}/data:/app/data simopatu/my-screaper```
+ - Through image: ```docker run -v ${PWD}/data:/app/data simopatu/my-screaper```
+- Through docker-compose: ```docker-compose run my-screaper```
