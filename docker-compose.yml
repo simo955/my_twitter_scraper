@@ -9,8 +9,13 @@ services:
       - ./src:/app/src
       - ./data:/app/data
       - ./app.py:/app/app.py
+<<<<<<< HEAD
     environment: 
     - TWITTER_BEARER=AAAAAAAAAAAAAAAAAAAAABjlawEAAAAAOSuOTaROb3REfr%2FkZA13fcpxOXI%3DX66yLu5ptELpcpWZ3t9KaMEDRDza0OnZNakqwVys7mKI5Btg7U
+=======
+    environment:
+    - TWITTER_BEARER=XX
+>>>>>>> 04326a7 (Fixing docker structure)
     - BATCH_SIZE=100
     - TOT_TWEET=1000
     entrypoint: ["python3",  "/app/app.py"]
