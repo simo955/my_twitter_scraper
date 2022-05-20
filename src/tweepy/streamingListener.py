@@ -1,6 +1,12 @@
+import os
 import tweepy
+
 from src.utils import save_to_df, save_df_to_csv, is_tweet_valid
-from src.config import BATCH_SIZE, TOT_TWEET
+from src.config import BASIC_DATA_PATH
+
+
+BATCH_SIZE=int(os.environ.get('BATCH_SIZE', 100))
+TOT_TWEET=int(os.environ.get('TOT_TWEET', 1000))
 
 class myStreamListener(tweepy.StreamingClient):
     total_number_of_tweets = 0

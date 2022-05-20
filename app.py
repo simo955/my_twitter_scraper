@@ -5,7 +5,7 @@ from src.tweepy.streamingListener import myStreamListener
 from src.tweepy.functions import create_custom_dt, getClient
 from src.utils import WANTED_FIELDS
 
-token=''
+token=os.environ.get('TWITTER_BEARER', 'XX')
 
 if __name__ == '__main__':
     print('Inizialization..')

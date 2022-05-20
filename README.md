@@ -26,16 +26,19 @@ Get a Bearer Token from [Twitter Developer Portal](https://developer.twitter.com
 
 ## Requirements
 
-To run this script, you'll need python 3.7 and the following libraries:
+To run you'll need python 3.7 and the following libraries:
 - [Tweepy](https://www.tweepy.org) - An easy-to-use Python library for accessing the Twitter API..
-- [Twitter API v2](https://developer.twitter.com/en/docs/twitter-api) - The Twitter API enables programmatic access to Twitter in unique and advanced ways. 
+- [Twitter API v2 token](https://developer.twitter.com/en/docs/twitter-api) - The Twitter API enables programmatic access to Twitter in unique and advanced ways. 
+- [Pandas](https://pandas.pydata.org): pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.
+
+
 # Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contribution you make is **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/yourFeature`)
-3. Commit your Changes (`git commit -m 'Add some yourFeature'`)
+3. Commit your Changes (`git commit -m 'your feature'`)
 4. Push to the Branch (`git push origin feature/yourFeature`)
 5. Open a Pull Request
 
