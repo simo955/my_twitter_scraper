@@ -1,5 +1,6 @@
 import os
 import tweepy
+import logging
 
 from src.utils import save_to_df, save_df_to_csv, is_tweet_valid
 
@@ -14,7 +15,7 @@ class myStreamListener(tweepy.StreamingClient):
     closed_peacefully = False
 
     def __init__(self, bearer_token, BASIC_DATA_PATH) -> None:
-        self.BASIC_DATA_PATH=BASIC_DATA_PATH+'/tweets'
+        self.BASIC_DATA_PATH = BASIC_DATA_PATH + '/tweets'
         self.df = None
         super().__init__(bearer_token, wait_on_rate_limit=True, return_type = dict, daemon=True )
 
@@ -33,7 +34,7 @@ class myStreamListener(tweepy.StreamingClient):
             self.current_number_batched += 1
 
             if self.current_number_batched > BATCH_SIZE:
-                print('{} tweet parsed'.format(self.total_number_of_tweets))
+                logging.info('{} tweets parsed'.format(self.total_number_of_tweets))
                 self.df = save_to_df(self.batched_tweets, self.df)
                 save_df_to_csv(self.df, self.BASIC_DATA_PATH+'-{}.csv'.format(self.batch_num))
                 self.reset_batch()
@@ -43,18 +44,18 @@ class myStreamListener(tweepy.StreamingClient):
                 self.disconnect() 
         
         except Exception as e:
-            print('Encountered Exception:', e)
+            logging.error('Encountered Exception: {}'.format(e))
             pass
 
     def on_errors(self, errors) :
         save_df_to_csv(self.df, self.BASIC_DATA_PATH+'-{}.csv'.format('BACKUP_E'))
-        print(errors)
+        logging.error('on_errors: Encountered errors: {}'.format(errors))
+
 
     def on_exception(self, e):
-        print('on_exception: Encountered Exception:', e)
-
+        logging.error('on_exception: Encountered Exception: {}'.format(e))
 
     def on_disconnect(self):
+        logging.info('on_disconnect')
         if not self.closed_peacefully:
             save_df_to_csv(self.df, self.BASIC_DATA_PATH+'-{}.csv'.format('BACKUP_D'))
-        print('on disconnect')

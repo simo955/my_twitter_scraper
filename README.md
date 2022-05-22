@@ -3,26 +3,39 @@
 ![](/img/twitter.png)
 
 # Idea
-Python script for connecting to Twitter stream, gather tweets that match a particular keyword, hashtag or mention and save them on a CSV file.
+
+![](/img/linode.png)
+Deploy our own script to crawl tweets from Twitter in a cloud provider (Linode) to collect .csv later used for sentiment analisys.
+
+Note: In the photo you can see Linode's dashboard showing data about the execution of our crawler in a 24h timespan.
 
 # Getting started
+
 It is possible to run this project inside a container or as a simple script.
 
-## 1) Container
+## 1) Preferred way
+- Get a Bearer Token from [Twitter Developer Portal](https://developer.twitter.com/)
+- Set the env var `TWITTER_BEARER` to equal the obtained token
+- Run run.sh to generate a cronjob which, every odd hour, runs the crawler
+- Note that the number of crawled tweets depends on the env var `TOT_TWEET`.
+
+## 2) Container
+
 Get a Bearer Token from [Twitter Developer Portal](https://developer.twitter.com/)
 **Run Through image**
 - Modify `Dockerfile` setting `TWITTER_BEARER` to equal the obtained token
-- Build image: ```docker build -v data:data/app my-screaper .```
-- Run image: ```docker run -v ${PWD}/data:/app/data simopatu/my-screaper```
+- Build image: ```docker build -v data:data/app twitter-screaper .```
+- Run image: ```docker run -v ${PWD}/data:/app/data twitter-screaper```
 
 **Run Through docker-compose**
 - Modify `docker-compose.yml` setting `TWITTER_BEARER` to equal the obtained token
 - Run image: ```docker-compose run my-screaper```
 
-## 2) Shell script
-- Get a Bearer Token from [Twitter Developer Portal](https://developer.twitter.com/)
-- Modify `app.py` line 7 setting token to equal the obtained token
-- Run run.sh to generate a cronjob which runs every odd hour
+## Analyse the data
+
+Once data have been crawled, before analysing it, you can use:
+- `scripts/unpack_downloaded_data.py` to move the .csv that have been placed in different directories following the crawling timestamp, to the same directory: "destination".
+- `scripts/create_compounded_csv.py` to create a dataset from multiple .csv placed in the same directory "destination".
 
 ## Requirements
 

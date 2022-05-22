@@ -17,7 +17,7 @@ def perform_search(client, isUser, user=None, tag=''):
                                         max_results=100)
 
 def create_custom_dt(client, df, BASIC_DATA_PATH):
-    BASIC_DATA_PATH=BASIC_DATA_PATH+'/tweets'
+    BASIC_DATA_PATH = BASIC_DATA_PATH + '/tweets'
     for usr in WANTED_USERS:
         tweets=perform_search(client, True, usr)
         time.sleep(1)
