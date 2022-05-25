@@ -1,13 +1,13 @@
 import os
 import shutil
 
-data_path='../data'
-destination_name='destination'
-destination_path= data_path+'/'+destination_name
+DATA_PATH=os.environ.get('DATA_PATH', '../data')
+DESTINATION_NAME=os.environ.get('DESTINATION_NAME', 'destination')
+destination_path= DATA_PATH+'/'+DESTINATION_NAME
 
 def unpack_downloaded_data(dirs):
     for d in dirs:
-        dir_path= data_path+'/'+d
+        dir_path= DATA_PATH+'/'+d
         error_flag=0
         files = [f.split('.csv')[0] for f in os.listdir(dir_path) if '.csv' in f]
     
@@ -31,7 +31,7 @@ def unpack_downloaded_data(dirs):
                 print("Error: %s : %s" % (d, e.strerror))
 
 if __name__ == "__main__":
-    dirs = [d for d in os.listdir(data_path) if '.' not in d and destination_name not in d]
+    dirs = [d for d in os.listdir(DATA_PATH) if '.' not in d and DESTINATION_NAME not in d]
 
     try: 
         os.mkdir(destination_path) 

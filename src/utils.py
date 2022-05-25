@@ -27,15 +27,15 @@ def save_df_to_csv(df, path, index=False):
         logging.error('Something went wrong while saving the DF. Exception {}'.format(e))
 
 def is_retweet(text):
-    if any(('RT @' in text, 'RT' in text, text.count('@') >= 2)):
+    if any(('RT' in text, text.count('@') >= 2)):
         return True
     return False
 
 def is_tweet_valid(tweet):
-    if  not tweet['id']:
+    if  not tweet.get('id') or not tweet.get('text'):
         return False
-    if tweet['lang'] != ENG_TEXT:
+    if tweet.get('lang') != ENG_TEXT:
         return False
-    if is_retweet(tweet['text']):
+    if is_retweet(tweet.get('text')):
         return False
     return True

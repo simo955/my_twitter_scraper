@@ -2,9 +2,9 @@ import os
 import json
 import pandas as pd
 
-data_path='../data'
-destination_name='destination'
-destination_path= data_path+'/'+destination_name
+DATA_PATH=os.environ.get('DATA_PATH', '../data')
+DESTIONATION_NAME=os.environ.get('DESTIONATION_NAME', 'destination')
+destination_path=DATA_PATH+'/'+DESTIONATION_NAME
 
 def create_compounded_csv(files):
     compounded_df = pd.DataFrame(columns=['id','text','author_id','created_at','public_metrics','lang','geo'])
@@ -13,6 +13,7 @@ def create_compounded_csv(files):
         file_path=destination_path+'/'+path
         try:
             dt = pd.read_csv(file_path, dtype={'id':str,'text':str, 'author_id':str})
+            os.remove(file_path)
         except:
             print('Unable to read:', file_path)
             continue
