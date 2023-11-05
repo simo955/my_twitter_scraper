@@ -1,25 +1,16 @@
 version: '3'
 services:
-  twitter-screaper:
-    image: twitter-screaper:latest
+  twitter-scraper:
+    image: twitter-scraper:latest
     working_dir: /app
     ports:
       - "8000:8000"
     volumes:
       - ./src:/app/src
       - ./data:/app/data
-<<<<<<< HEAD
-      - ./app.py:/app/app.py
-<<<<<<< HEAD
-    environment: 
-    - TWITTER_BEARER=AAAAAAAAAAAAAAAAAAAAABjlawEAAAAAOSuOTaROb3REfr%2FkZA13fcpxOXI%3DX66yLu5ptELpcpWZ3t9KaMEDRDza0OnZNakqwVys7mKI5Btg7U
-=======
-=======
       - ./crawler.py:/app/crawler.py
->>>>>>> 8e0976b (Major refactoring)
     environment:
     - TWITTER_BEARER=XX
->>>>>>> 04326a7 (Fixing docker structure)
     - BATCH_SIZE=100
     - TOT_TWEET=1000
     entrypoint: ["python3",  "/app/crawler.py"]

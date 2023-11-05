@@ -1,4 +1,4 @@
-# [My]Twitter screaper
+# [My]Twitter scraper
 
 ![](/img/twitter.png)
 
@@ -24,12 +24,12 @@ It is possible to run this project inside a container or as a simple script.
 Get a Bearer Token from [Twitter Developer Portal](https://developer.twitter.com/)
 **Run Through image**
 - Modify `Dockerfile` setting `TWITTER_BEARER` to equal the obtained token
-- Build image: ```docker build -v data:data/app twitter-screaper .```
-- Run image: ```docker run -v ${PWD}/data:/app/data twitter-screaper```
+- Build image: ```docker build -v data:data/app twitter-scraper .```
+- Run image: ```docker run -v ${PWD}/data:/app/data twitter-scraper```
 
 **Run Through docker-compose**
 - Modify `docker-compose.yml` setting `TWITTER_BEARER` to equal the obtained token
-- Run image: ```docker-compose run my-screaper```
+- Run image: ```docker-compose run my-scraper```
 
 ## Analyse the data
 
